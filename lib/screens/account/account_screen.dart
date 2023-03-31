@@ -1,15 +1,21 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
 import 'package:grocery_app/helpers/column_with_seprator.dart';
+import 'package:grocery_app/screens/account/legal_about/faq_page.dart';
 import 'package:grocery_app/styles/colors.dart';
 
 import 'account_item.dart';
 
 class AccountScreen extends StatelessWidget {
+  //BuildContext get scaffoldContext => null;
+
   @override
   Widget build(BuildContext context) {
+    // final scaffoldContext = context;
     return SafeArea(
       child: Container(
         child: SingleChildScrollView(
@@ -22,12 +28,12 @@ class AccountScreen extends StatelessWidget {
                 leading:
                     SizedBox(width: 65, height: 65, child: getImageHeader()),
                 title: AppText(
-                  text: "Mohammed Hashim",
+                  text: "USER",
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
                 subtitle: AppText(
-                  text: "github.com/mohammedhashim44",
+                  text: "famiecare123@gmail.com",
                   color: Color(0xff7C7C7C),
                   fontWeight: FontWeight.normal,
                   fontSize: 16,
@@ -36,7 +42,7 @@ class AccountScreen extends StatelessWidget {
               Column(
                 children: getChildrenWithSeperator(
                   widgets: accountItems.map((e) {
-                    return getAccountItemWidget(e);
+                    return getAccountItemWidget(e, context);
                   }).toList(),
                   seperator: Divider(
                     thickness: 1,
@@ -110,30 +116,80 @@ class AccountScreen extends StatelessWidget {
     );
   }
 
-  Widget getAccountItemWidget(AccountItem accountItem) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 15),
-      padding: EdgeInsets.symmetric(horizontal: 25),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 20,
-            height: 20,
-            child: SvgPicture.asset(
-              accountItem.iconPath,
+  Widget getAccountItemWidget(AccountItem accountItem, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => accountItem.page,
+          ),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 15),
+        padding: EdgeInsets.symmetric(horizontal: 25),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 20,
+              height: 20,
+              child: SvgPicture.asset(
+                accountItem.iconPath,
+              ),
             ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-          Text(
-            accountItem.label,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          Spacer(),
-          Icon(Icons.arrow_forward_ios)
-        ],
+            SizedBox(
+              width: 20,
+            ),
+            Text(
+              accountItem.label,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Spacer(),
+            Icon(Icons.arrow_forward_ios),
+          ],
+        ),
       ),
     );
   }
 }
+//  Builder(
+//             builder: (context) => IconButton(
+//               icon: Icon(Icons.arrow_forward_ios),
+//               onPressed: () {
+//                 Navigator.push(
+//                   context,
+//                   MaterialPageRoute(builder: (context) => FaqPage()),
+//                 );
+//               },
+//             ),
+//           ),
+//   Widget getAccountItemWidget(AccountItem accountItem) {
+    
+//     return Container(
+//       margin: EdgeInsets.symmetric(vertical: 15),
+//       padding: EdgeInsets.symmetric(horizontal: 25),
+//       child: Row(
+//         children: [
+//           SizedBox(
+//             width: 20,
+//             height: 20,
+//             child: SvgPicture.asset(
+//               accountItem.iconPath,
+//             ),
+//           ),
+//           SizedBox(
+//             width: 20,
+//           ),
+//           Text(
+//             accountItem.label,
+//             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+//           ),
+//           Spacer(),
+//           Icon(Icons.arrow_forward_ios)
+         
+//         ],
+//       ),
+//     );
+//   }
+// }
