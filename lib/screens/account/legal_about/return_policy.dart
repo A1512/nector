@@ -20,10 +20,10 @@ class _ReturnPageState extends State<ReturnPage> {
         ),
         brightness: Brightness.light,
         backgroundColor: Colors.transparent,
-        title: Text(
-          'Settings',
-          style: TextStyle(color: darkGrey),
-        ),
+        // title: Text(
+        //   'Settings',
+        //   style: TextStyle(color: darkGrey),
+        // ),
         elevation: 0,
       ),
       body: SafeArea(

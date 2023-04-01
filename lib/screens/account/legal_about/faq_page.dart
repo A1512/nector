@@ -45,10 +45,10 @@ class _FaqPageState extends State<FaqPage> {
         ),
         brightness: Brightness.light,
         backgroundColor: Colors.transparent,
-        title: Text(
-          'Settings',
-          style: TextStyle(color: darkGrey),
-        ),
+        // title: Text(
+        //   'Settings',
+        //   style: TextStyle(color: darkGrey),
+        // ),
         elevation: 0,
       ),
       body: SafeArea(

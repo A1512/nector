@@ -1,15 +1,13 @@
 import 'dart:io';
-
-import 'app_properties.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TermsPage extends StatefulWidget {
+class checkTermsPage extends StatefulWidget {
   @override
   _TermsPageState createState() => _TermsPageState();
 }
 
-class _TermsPageState extends State<TermsPage> {
+class _TermsPageState extends State<checkTermsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,40 +47,40 @@ class _TermsPageState extends State<TermsPage> {
                 child: ListView(
                   children: [
                     Text(
-                      "1. Acceptance of Term:\nYou agree to these Terms and Conditions by downloading and/or using the Famiecare Grocery Mobile Application. If you do not agree to these Terms and Conditions, you should not use the Famiecare Grocery Mobile Application.",
+                      "1. Order Placement:\nAll orders must be placed through the designated channels specified by the seller, and must be accompanied by full payment.",
                       style: TextStyle(fontSize: 15.0),
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     Text(
-                      "2. Use of Application:\nThe Famiecare Grocery Mobile Application is provided to you for personal use only. You agree not to reproduce, duplicate, copy, sell, resell or exploit any portion of the Application without the express written permission of Famiecare.",
+                      "2. Order Cancellation:\nOrders may be cancelled up until the point that they have been shipped. Refunds for cancelled orders will be issued within 7 business days.",
                       style: TextStyle(fontSize: 15.0),
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     Text(
-                      "3. Registration:\nIn order to use the Famiecare Grocery Mobile Application, you may be required to register and create an account. You agree to provide accurate and complete information when creating an account, and to keep your login information confidential.",
+                      "3. Shipping:\nShipping times and methods will be specified by the seller at the time of order placement. The seller is not responsible for delays or damages caused by the shipping carrier..",
                       style: TextStyle(fontSize: 15.0),
                     ),
                     SizedBox(
                       height: 20,
                     ),
                     Text(
-                        "4. User Conduct\nYou agree to use the Famiecare Grocery Mobile Application for lawful purposes only. You agree not to use the Application to:\n\n-Violate any local, state, national, or international law or regulation\n-Transmit any material that is unlawful, harassing, defamatory, or otherwise objectionable\n-Impersonate any person or entity, including but not limited to, a Famiecare representative\n-Transmit any viruses, Trojan horses, worms, or other computer programs that may damage or interfere with the operation of the Application\n-Attempt to gain unauthorized access to the Application or any related systems or networks",
+                        "4. Returns and Refunds:\nAll sales are final unless otherwise specified by the seller. If a return is authorized by the seller, the buyer is responsible for return shipping costs. Refunds will be issued within 7 business days of receipt of returned merchandise.",
                         style: TextStyle(fontSize: 15.0)),
                     SizedBox(
                       height: 20,
                     ),
                     Text(
-                        "5. Intellectual Property:\nAll trademarks, logos, service marks, and trade names used on the Famiecare Grocery Mobile Application are the property of their respective owners. You agree not to use any of these without the prior written consent of the owner.",
+                        "5. Product Warranty:\nAll products are covered by the manufacturer's warranty, if applicable. The seller does not provide any additional warranty beyond that provided by the manufacturer..",
                         style: TextStyle(fontSize: 15.0)),
                     SizedBox(
                       height: 20,
                     ),
                     Text(
-                        "6. Contact Information:\nIf you have any questions or comments about these Terms and Conditions, please contact us at support@famiecare.com.",
+                        "6. Limitation of Liability:\nThe seller shall not be liable for any direct, indirect, incidental, special, or consequential damages arising out of or in connection with the use or inability to use the products sold, even if the seller has been advised of the possibility of such damages.",
                         style: TextStyle(fontSize: 15.0)),
                   ],
                 ),

@@ -12,6 +12,7 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
@@ -23,6 +24,14 @@ class SignupScreen extends StatelessWidget {
               colorBlendMode: BlendMode.darken,
             ),
           ),
+          AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+         leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white,),
+          onPressed: () => Navigator.of(context).pop(),
+         ),
+       ),
           Padding(
             padding: EdgeInsets.only(top: 50,bottom: 16,left: 16,right:16),
            

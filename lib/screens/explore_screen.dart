@@ -35,25 +35,25 @@ class _ExploreScreenState extends State<ExploreScreen> {
     fetchCategories();
   }
 
-  Future<void> fetchCategories() async {
-    try {
-      final response = await http.get(Uri.parse(
-          'http://localhost/ty_project/latest_famiecare_project_adminpanel/apicategories.php'));
-      if (response.statusCode == 200) {
-        List<dynamic> jsonList = jsonDecode(response.body);
-        List<CategoryItem> fetchedCategories =
-            jsonList.map((e) => CategoryItem.fromJson(e)).toList();
-        setState(() {
-          categories = fetchedCategories;
-        });
-      } else {
-        throw Exception('Failed to load categories');
-      }
-    } catch (e) {
-      print(e.toString());
-      Fluttertoast.showToast(msg: "Failed to load categories");
+void fetchCategories() {
+  http.get(Uri.parse('http://localhost/ty_project/latest_famiecare_project_adminpanel/apicategories.php'))
+      .then((response) {
+    if (response.statusCode == 200) {
+      List<dynamic> jsonList = jsonDecode(response.body);
+      List<CategoryItem> fetchedCategories =
+          jsonList.map((e) => CategoryItem.fromJson(e)).toList();
+      setState(() {
+        categories = fetchedCategories;
+      });
+    } else {
+      throw Exception('Failed to load categories');
     }
-  }
+  }).catchError((e) {
+    print(e.toString());
+    Fluttertoast.showToast(msg: "Failed to load categories");
+  });
+}
+
 
   @override
   Widget build(BuildContext context) {

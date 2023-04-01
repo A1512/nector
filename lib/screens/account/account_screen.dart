@@ -1,11 +1,10 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
 import 'package:grocery_app/helpers/column_with_seprator.dart';
 import 'package:grocery_app/screens/account/legal_about/faq_page.dart';
+import 'package:grocery_app/screens/login.dart';
 import 'package:grocery_app/styles/colors.dart';
 
 import 'account_item.dart';
@@ -26,7 +25,7 @@ class AccountScreen extends StatelessWidget {
               ),
               ListTile(
                 leading:
-                    SizedBox(width: 65, height: 65, child: getImageHeader()),
+                    SizedBox(width: 65, height: 75, child: getImageHeader()),
                 title: AppText(
                   text: "USER",
                   fontSize: 18,
@@ -52,7 +51,7 @@ class AccountScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              logoutButton(),
+              logoutButton(context),
               SizedBox(
                 height: 20,
               )
@@ -63,52 +62,60 @@ class AccountScreen extends StatelessWidget {
     );
   }
 
-  Widget logoutButton() {
-    return Container(
-      width: double.maxFinite,
-      margin: EdgeInsets.symmetric(horizontal: 25),
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          visualDensity: VisualDensity.compact,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
+  Widget logoutButton(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        width: double.maxFinite,
+        margin: EdgeInsets.symmetric(horizontal: 25),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            visualDensity: VisualDensity.compact,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+            ),
+            elevation: 0,
+            backgroundColor: Color(0xffF2F3F2),
+            textStyle: TextStyle(
+              color: Colors.white,
+            ),
+            padding: EdgeInsets.symmetric(vertical: 24, horizontal: 25),
+            minimumSize: const Size.fromHeight(50),
           ),
-          elevation: 0,
-          backgroundColor: Color(0xffF2F3F2),
-          textStyle: TextStyle(
-            color: Colors.white,
-          ),
-          padding: EdgeInsets.symmetric(vertical: 24, horizontal: 25),
-          minimumSize: const Size.fromHeight(50),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 20,
-              height: 20,
-              child: SvgPicture.asset(
-                "assets/icons/account_icons/logout_icon.svg",
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: 20,
+                height: 20,
+                child: SvgPicture.asset(
+                  "assets/icons/account_icons/logout_icon.svg",
+                ),
               ),
-            ),
-            Text(
-              "Log Out",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.primaryColor),
-            ),
-            Container()
-          ],
+              Text(
+                "Log Out",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primaryColor),
+              ),
+              Container()
+            ],
+          ),
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LoginScreen(),
+                ));
+          },
         ),
-        onPressed: () {},
       ),
     );
   }
 
   Widget getImageHeader() {
-    String imagePath = "assets/images/account_image.jpg";
+    String imagePath = "assets/images/temp.jpg";
     return CircleAvatar(
       radius: 5.0,
       backgroundImage: AssetImage(imagePath),
