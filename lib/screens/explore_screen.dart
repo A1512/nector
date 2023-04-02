@@ -35,9 +35,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
     fetchCategories();
   }
 
-void fetchCategories() {
-  http.get(Uri.parse('http://localhost/ty_project/latest_famiecare_project_adminpanel/apicategories.php'))
-      .then((response) {
+void fetchCategories() async {
+  
+    final response = await http.get(Uri.parse('http://localhost/ty_project/latest_famiecare_project_adminpanel/apicategories.php'));
     if (response.statusCode == 200) {
       List<dynamic> jsonList = jsonDecode(response.body);
       List<CategoryItem> fetchedCategories =
@@ -48,11 +48,9 @@ void fetchCategories() {
     } else {
       throw Exception('Failed to load categories');
     }
-  }).catchError((e) {
-    print(e.toString());
-    Fluttertoast.showToast(msg: "Failed to load categories");
-  });
+  
 }
+
 
 
   @override

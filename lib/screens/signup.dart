@@ -1,18 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_app/screens/otp.dart';
 import 'package:grocery_app/styles/colors.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class SignupScreen extends StatelessWidget {
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _mobileNumberController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+class SignupScreen extends StatefulWidget {
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+  var data;
+  TextEditingController firstname = TextEditingController(text: '');
+  TextEditingController lastname = TextEditingController(text: '');
+  TextEditingController mobile = TextEditingController(text: '');
+  TextEditingController address = TextEditingController(text: '');
+
+  TextEditingController password = TextEditingController(text: '');
+  Future loginMtd() async {
+    //     body: {'phone': phone.text, 'password': password.text});
+
+    if (firstname.text == "" ||
+        lastname.text == "" ||
+        mobile.text == "" ||
+        address.text == "") {
+      try {
+        final response = await http.post(
+            Uri.parse('http://localhost/ty_project/admin_panel/apisignup.php'),
+            body: {
+              "firstname": firstname.text,
+              "lastname": lastname.text,
+              "mobile": mobile.text,
+              "address": address.text,
+            });
+
+        var data = jsonDecode(response.body);
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+    if (data == "Success") {
+      Fluttertoast.showToast(
+          msg: "Login Successfully",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.grey,
+          fontSize: 25);
+    } else {
+      Fluttertoast.showToast(
+          msg: "Login Not Successfully",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.grey,
+          fontSize: 25);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
@@ -27,14 +72,16 @@ class SignupScreen extends StatelessWidget {
           AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0.0,
-         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white,),
-          onPressed: () => Navigator.of(context).pop(),
-         ),
-       ),
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
           Padding(
-            padding: EdgeInsets.only(top: 50,bottom: 16,left: 16,right:16),
-           
+            padding: EdgeInsets.only(top: 50, bottom: 16, left: 16, right: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -55,7 +102,7 @@ class SignupScreen extends StatelessWidget {
                       color: Colors.white),
                 ),
                 TextField(
-                  controller: _firstNameController,
+                  controller: firstname,
                   decoration: InputDecoration(
                     hintText: 'Enter your first name',
                     fillColor: Colors.white,
@@ -71,7 +118,7 @@ class SignupScreen extends StatelessWidget {
                       color: Colors.white),
                 ),
                 TextField(
-                  controller: _lastNameController,
+                  controller: lastname,
                   decoration: InputDecoration(
                     hintText: 'Enter your last name',
                     fillColor: Colors.white,
@@ -87,7 +134,7 @@ class SignupScreen extends StatelessWidget {
                       color: Colors.white),
                 ),
                 TextField(
-                  controller: _mobileNumberController,
+                  controller: mobile,
                   decoration: InputDecoration(
                     hintText: 'Enter your mobile number',
                     fillColor: Colors.white,
@@ -103,7 +150,7 @@ class SignupScreen extends StatelessWidget {
                       color: Colors.white),
                 ),
                 TextField(
-                  controller: _addressController,
+                  controller: address,
                   decoration: InputDecoration(
                     hintText: 'Enter your address',
                     fillColor: Colors.white,
@@ -119,7 +166,7 @@ class SignupScreen extends StatelessWidget {
                       color: Colors.white),
                 ),
                 TextField(
-                  controller: _passwordController,
+                  controller: password,
                   obscureText: true,
                   decoration: InputDecoration(
                     hintText: 'Enter your password',
@@ -130,6 +177,11 @@ class SignupScreen extends StatelessWidget {
                 SizedBox(height: 32.0),
                 ElevatedButton(
                   onPressed: () {
+                    print(firstname.text);
+                    print(lastname.text);
+                    print(mobile.text);
+                    print(address.text);
+                    print(password.text);
                     //TODO: Implement sign-up logic
                     Navigator.push(
                         context,
