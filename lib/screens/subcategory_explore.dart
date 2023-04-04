@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
-import 'package:grocery_app/models/category_item.dart';
-import 'package:grocery_app/screens/subcategory_explore.dart';
+import 'package:grocery_app/models/subcategory_item.dart';
+import 'package:grocery_app/screens/subcategory_items_screen.dart';
+
+
+import '../models/subcategory_item.dart';
 import 'package:grocery_app/widgets/category_item_card_widget.dart';
 import 'package:grocery_app/widgets/search_bar_widget.dart';
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
+import '../widgets/subcategory_item_card_widget.dart';
 import 'category_items_screen.dart';
 
 List<Color> gridColors = [
@@ -22,37 +26,43 @@ List<Color> gridColors = [
   Color(0xffD73B77),
 ];
 
-class ExploreScreen extends StatefulWidget {
+class SubExploreScreen extends StatefulWidget {
+  final int id;
+
+  SubExploreScreen({required this.id,required Map<String, int> map});
+  //SubExploreScreen(Map<String, int> map);
+
+  
   @override
-  State<ExploreScreen> createState() => _ExploreScreenState();
+  State<SubExploreScreen> createState() => _ExploreScreenState();
 }
 
-class _ExploreScreenState extends State<ExploreScreen> {
-  late List<CategoryItem> categories = [];
+class _ExploreScreenState extends State<SubExploreScreen> {
+  
+  late List<SubCategoryItem> subcategories = [];
 
   @override
   void initState() {
     super.initState();
-    fetchCategories();
+    fetchSubCategories();
   }
-
-void fetchCategories() async {
   
-    final response = await http.get(Uri.parse('http://localhost/ty_project/admin_panel/apicategories.php'));
+  Future<void> fetchSubCategories() async {
+    final response = await http.post  (Uri.parse('http://localhost/ty_project/admin_panel/apiviewsubcategory.php'),
+      body: {
+        "cat_id": "1",
+      }
+    );
     if (response.statusCode == 200) {
       List<dynamic> jsonList = jsonDecode(response.body);
-      List<CategoryItem> fetchedCategories =
-          jsonList.map((e) => CategoryItem.fromJson(e)).toList();
+      List<SubCategoryItem> fetchedSubCategories = jsonList.map((e) => SubCategoryItem.fromJson(e)).toList();
       setState(() {
-        categories = fetchedCategories;
+        subcategories = fetchedSubCategories;
       });
     } else {
       throw Exception('Failed to load categories');
     }
-  
-}
-
-
+  }  
 
   @override
   Widget build(BuildContext context) {
@@ -100,20 +110,17 @@ void fetchCategories() async {
       ),
       child: StaggeredGrid.count(
         crossAxisCount: 2,
-        children: categories.asMap().entries.map<Widget>((e) {
+        children: subcategories.asMap().entries.map<Widget>((e) {
           int index = e.key;
-          CategoryItem categoryItem = e.value;
+          SubCategoryItem SubcategoryItem = e.value;
           return GestureDetector(
             onTap: () {
-              onCategoryItemClicked(context, categoryItem);
-             Navigator.push(context, MaterialPageRoute(builder: (context) => SubExploreScreen( map: {'map': 1}, id:1,),
-              ),
-              );
+              onSubCategoryItemClicked(context, SubcategoryItem);
             },
             child: Container(
               padding: EdgeInsets.all(10),
-              child: CategoryItemCardWidget(
-                item: categoryItem,
+              child: SubCategoryItemCardWidget(
+                item: SubcategoryItem,
                 color: gridColors[index % gridColors.length],
               ),
             ),
@@ -125,10 +132,10 @@ void fetchCategories() async {
     );
   }
 
-  void onCategoryItemClicked(BuildContext context, CategoryItem categoryItem) {
+  void onSubCategoryItemClicked(BuildContext context, SubCategoryItem SubcategoryItem) {
     Navigator.of(context).push(new MaterialPageRoute(
       builder: (BuildContext context) {
-        return CategoryItemsScreen();
+        return SubCategoryItemsScreen();
       },
     ));
   }

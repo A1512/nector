@@ -10,12 +10,12 @@ import 'package:email_validator/email_validator.dart';
 
 var data;
 
-class SignupScreen extends StatefulWidget {
+class SignupScreen1 extends StatefulWidget {
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<SignupScreen1> createState() => _SignupScreen1State();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SignupScreen1State extends State<SignupScreen1> {
   bool checker = false;
   bool _isPasswordVisible = false;
   String? emailError;
@@ -83,7 +83,7 @@ class _SignupScreenState extends State<SignupScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SignupScreen(),
+          builder: (context) => SignupScreen1(),
         ),
       );
       //checker = false;

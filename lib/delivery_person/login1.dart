@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:grocery_app/delivery_person/welcome_screen1.dart';
+import 'package:grocery_app/delivery_person/dashboard1/dashboard_screen1.dart';
+import 'package:grocery_app/delivery_person/otp1.dart';
+import 'package:grocery_app/delivery_person/signup1.dart';
 import 'package:grocery_app/screens/dashboard/dashboard_screen.dart';
 import 'package:grocery_app/screens/otp.dart';
 import 'package:grocery_app/screens/signup.dart';
@@ -8,12 +10,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen1 extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginScreen1State createState() => _LoginScreen1State();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreen1State extends State<LoginScreen1> {
   var data;
   final _formKey = GlobalKey<FormState>();
   // late String _mobileNumber;
@@ -75,25 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => WelcomeScreen1(),
-                                ));
-                          },
-                          child: Text(
-                            'Not a User?',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                            ),
-                          )),
-          ),
+          
           SafeArea(
             child: Padding(
               padding: EdgeInsets.all(16),
@@ -176,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DashboardScreen(),
+                            builder: (context) => DashboardScreen1(),
                           ),
                         );
                       },
@@ -189,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => OtpScreen(),
+                                builder: (context) => OtpScreen1(),
                               ));
                         },
                         child: Text(
@@ -215,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SignupScreen()),
+                    MaterialPageRoute(builder: (context) => SignupScreen1()),
                   );
                 },
                 child: Padding(
