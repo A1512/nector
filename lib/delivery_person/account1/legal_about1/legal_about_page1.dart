@@ -7,12 +7,12 @@ import 'terms1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class LegalAboutPage extends StatefulWidget {
+class LegalAboutPage1 extends StatefulWidget {
   @override
-  _LegalAboutPageState createState() => _LegalAboutPageState();
+  _LegalAboutPage1State createState() => _LegalAboutPage1State();
 }
 
-class _LegalAboutPageState extends State<LegalAboutPage> {
+class _LegalAboutPage1State extends State<LegalAboutPage1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

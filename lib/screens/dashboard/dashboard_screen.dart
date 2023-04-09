@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:grocery_app/models/grocery_item.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:grocery_app/styles/colors.dart';
@@ -11,6 +15,28 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int currentIndex = 0;
+  late List<GroceryItem> categories = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCategories();
+  }
+
+  void fetchCategories() async {
+    final response = await http.get(
+        Uri.parse('http://localhost/ty_project/admin_panel/apidashboard.php'));
+    if (response.statusCode == 200) {
+      List<dynamic> jsonList = jsonDecode(response.body);
+      List<GroceryItem> fetchedCategories =
+          jsonList.map((e) => GroceryItem.fromJson(e)).toList();
+      setState(() {
+        categories = fetchedCategories;
+      });
+    } else {
+      throw Exception('Failed to load categories');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

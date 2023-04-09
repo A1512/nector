@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         print(response.body);
         if (response.statusCode == 200 && response.body.isNotEmpty) {
-           data = jsonDecode(response.body);
+          data = jsonDecode(response.body);
           // process the response data
         } else {
           // handle the error
@@ -76,23 +76,23 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 8.0),
             child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => WelcomeScreen1(),
-                                ));
-                          },
-                          child: Text(
-                            'Not a User?',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                            ),
-                          )),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WelcomeScreen1(),
+                      ));
+                },
+                child: Text(
+                  'Not a User?',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                  ),
+                )),
           ),
           SafeArea(
             child: Padding(
@@ -166,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(fontSize: 20),
                       ),
                       onPressed: () {
-                       // print(phone.text);
+                        // print(phone.text);
                         //print(password.text);
                         loginMtd();
                         // if (_formKey.currentState!.validate()) {

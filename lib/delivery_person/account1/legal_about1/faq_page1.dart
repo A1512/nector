@@ -1,3 +1,5 @@
+import 'package:url_launcher/url_launcher.dart';
+
 import 'app_properties1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,28 +12,28 @@ class FaqPage1 extends StatefulWidget {
 class _FaqPage1State extends State<FaqPage1> {
   List<Panel> panels = [
     Panel(
-        'How do I place an order on Famiecare dairy and grocery application?',
-        'To place an order on Famiecare dairy and grocery application, you need to create an account or log in if you already have one. Once logged in, you can browse through the products available for purchase, select the items you want to buy, add them to your cart, and proceed to checkout.',
+        'What are the delivery areas covered by our service?',
+        "FamieCare's delivery service covers a range of areas within the city. You can check the delivery coverage map in the app or contact support for further information.",
         false),
     Panel(
-        'What payment methods are accepted on Famiecare dairy and grocery application?',
-        'Famiecare dairy and grocery application accepts cash on delivery for now on.Other payment methods will be added soon',
+        'How should I handle a situation where the customer is not available to receive their delivery?',
+        'If the customer is not available to receive their delivery, you should attempt to contact them via phone or text to reschedule the delivery. If multiple attempts to contact the customer are unsuccessful, you should return the package to the warehouse.',
         false),
     Panel(
-        'How can I track my order on Famiecare dairy and grocery application?',
-        'You can track your order on Famiecare dairy and grocery application by checking the real-time updates on the status of your delivery. This includes notifications about when the products are being packed, when they are out for delivery, and when they have been delivered.',
+        'What should I do if I am unable to find the delivery location or if there is an issue with the address?',
+        'If you are unable to find the delivery location or if there is an issue with the address, you should attempt to contact the customer for clarification. If the issue persists, you should contact support for further instructions',
         false),
     Panel(
-        'Does Famiecare dairy and grocery application offer same-day delivery?',
-        'Yes, Famiecare dairy and grocery application offers same-day delivery for orders placed before a specified cut-off time.',
+        'How should I handle a situation where a customer reports a missing item from their order?',
+        'If a customer reports a missing item from their order, you should review the order details and contact support to investigate the issue. It is important to communicate with the customer throughout the process and provide updates on the resolution.',
         false),
     Panel(
-        'Does Famiecare dairy and grocery application offer discounts or promotions?',
-        'Yes, Famiecare dairy and grocery application offers discounts and promotions from time to time. Customers can check the app or sign up for the newsletter to stay updated on the latest offers.',
+        'What is the procedure for returning a package to the warehouse?',
+        'The procedure for returning a package to the warehouse varies depending on the reason for the return. You should follow the instructions provided in the app or contact support for further guidance.',
         false),
     Panel(
-        'What if I receive a damaged or incorrect product from Famiecare dairy and grocery application?',
-        'If you receive a damaged or incorrect product from Famiecare dairy and grocery application, you can contact their customer support team within a specified timeframe and they will initiate a return or refund process for you.',
+        'What should I do if there is a problem with the delivery vehicle or equipment?',
+        'If there is a problem with the delivery vehicle or equipment, you should contact support immediately for instructions on how to proceed.',
         false)
   ];
 
@@ -98,26 +100,33 @@ class _FaqPage1State extends State<FaqPage1> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 24.0, right: 24.0, bottom: 16.0),
-                child: Text(
-                  'Mobile Number:',
-                  style: TextStyle(
-                      color: Colors.black87,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0),
+                  padding: const EdgeInsets.only(left: 35.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        child: Text(
+                          '+91 9265446175',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[600]),
+                        ),
+                        onTap: () => launch('tel:+91 9265446175'),
+                      ),
+                      GestureDetector(
+                        child: Text(
+                          '\n+91 9664699320',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[600]),
+                        ),
+                        onTap: () => launch('tel:\n+91 9664699320'),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 35.0),
-                child: Text(
-                  '+91 9265446175\n\n+91 9664699320',
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[600]),
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.only(
                     top: 24.0, left: 24.0, right: 24.0, bottom: 16.0),
@@ -130,15 +139,33 @@ class _FaqPage1State extends State<FaqPage1> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 35.0),
-                child: Text(
-                  'shethaman2@gmailcom\n\nvarshilshah1945@gmail.com',
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[600]),
+                  padding: const EdgeInsets.only(left: 35.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        child: Text(
+                          'shethaman2@gmail.com',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[600]),
+                        ),
+                        onTap: () => launch('mailto:\nshethaman2@gmail.com'),
+                      ),
+                        GestureDetector(
+                        child: Text(
+                          '\nvarshilshah1945@gmail.com',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[600]),
+                        ),
+                        onTap: () => launch('mailto:\nvarshilshah1945@gmail.com'),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
         ),

@@ -36,9 +36,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
     fetchCategories();
   }
 
-void fetchCategories() async {
-  
-    final response = await http.get(Uri.parse('http://localhost/ty_project/admin_panel/apicategories.php'));
+  void fetchCategories() async {
+    final response = await http.get(
+        Uri.parse('http://localhost/ty_project/admin_panel/apicategories.php'));
     if (response.statusCode == 200) {
       List<dynamic> jsonList = jsonDecode(response.body);
       List<CategoryItem> fetchedCategories =
@@ -49,10 +49,7 @@ void fetchCategories() async {
     } else {
       throw Exception('Failed to load categories');
     }
-  
-}
-
-
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +102,15 @@ void fetchCategories() async {
           CategoryItem categoryItem = e.value;
           return GestureDetector(
             onTap: () {
-              onCategoryItemClicked(context, categoryItem);
-             Navigator.push(context, MaterialPageRoute(builder: (context) => SubExploreScreen( map: {'map': 1}, id:1,),
-              ),
+             // onCategoryItemClicked(context, categoryItem);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SubExploreScreen(
+                    map: {'map': 1},
+                    id: int.parse(categoryItem.id),
+                  ),
+                ),
               );
             },
             child: Container(
@@ -125,11 +128,11 @@ void fetchCategories() async {
     );
   }
 
-  void onCategoryItemClicked(BuildContext context, CategoryItem categoryItem) {
-    Navigator.of(context).push(new MaterialPageRoute(
-      builder: (BuildContext context) {
-        return CategoryItemsScreen();
-      },
-    ));
-  }
+  // void onCategoryItemClicked(BuildContext context, CategoryItem categoryItem) {
+  //   Navigator.of(context).push(new MaterialPageRoute(
+  //     builder: (BuildContext context) {
+  //       return CategoryItemsScreen();
+  //     },
+  //   ));
+  // }
 }

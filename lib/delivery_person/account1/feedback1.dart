@@ -3,12 +3,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class FeedbackPage extends StatefulWidget {
+class FeedbackPage1 extends StatefulWidget {
   @override
-  _FeedbackPageState createState() => _FeedbackPageState();
+  _FeedbackPage1State createState() => _FeedbackPage1State();
 }
 
-class _FeedbackPageState extends State<FeedbackPage> {
+class _FeedbackPage1State extends State<FeedbackPage1> {
   var data;
   final TextEditingController _feedbackController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -20,7 +20,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
       try {
         final response = await http.post(
             Uri.parse(
-                'http://localhost/ty_project/admin_panel/apiviewfeedback.php'),
+                'http://localhost/ty_project/admin_panel/delivery_person/apiviewfeedback1.php'),
             body: {
               "feedback": _feedbackController.text,
             });

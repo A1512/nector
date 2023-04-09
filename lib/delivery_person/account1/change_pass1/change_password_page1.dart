@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/delivery_person/account1/change_pass1/Reset_password1.dart';
+import 'package:grocery_app/delivery_person/dashboard1/dashboard_screen1.dart';
 import 'package:grocery_app/screens/account/change_pass/Reset_password.dart';
 import 'package:grocery_app/screens/dashboard/dashboard_screen.dart';
 import 'package:grocery_app/screens/otp.dart';
@@ -28,7 +30,7 @@ class _ChangePasswordPage1State extends State<ChangePasswordPage1> {
       try {
         final response = await http.post(
             Uri.parse(
-                'http://localhost/ty_project/admin_panel/apichangepass.php'),
+                'http://localhost/ty_project/admin_panel/delivery_person/apichangepass1.php'),
             body: {
               "newpass": _newPasswordController.text,
               "oldpass": _currentPasswordController.text,
@@ -57,7 +59,7 @@ class _ChangePasswordPage1State extends State<ChangePasswordPage1> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => DashboardScreen(),
+          builder: (context) => DashboardScreen1(),
         ),
       );
     } else {
@@ -173,7 +175,7 @@ class _ChangePasswordPage1State extends State<ChangePasswordPage1> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ResetPasswordPage(),
+                          builder: (context) => ResetPasswordPage1(),
                         ));
                   },
                   child: Text(

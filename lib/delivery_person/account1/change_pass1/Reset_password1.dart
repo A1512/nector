@@ -25,7 +25,7 @@ TextEditingController _confirmNewPasswordController = TextEditingController();
       try {
         final response = await http.post(
             Uri.parse(
-                'http://localhost/ty_project/admin_panel/apiresetpass.php'),
+                'http://localhost/ty_project/admin_panel/delivery_person/apiresetpass1.php'),
             body: {
               "newpass": _newPasswordController.text,
             });

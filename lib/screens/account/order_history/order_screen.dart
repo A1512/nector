@@ -5,7 +5,6 @@ import 'package:grocery_app/models/grocery_item.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-
 //import '../cart/checkout_bottom_sheet.dart';
 import 'order_item_widget.dart';
 import 'order_item.dart';
@@ -16,7 +15,7 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-   late List<OrderItem> order = [];
+  late List<OrderItem> order = [];
 
   @override
   void initState() {
@@ -24,11 +23,12 @@ class _OrderScreenState extends State<OrderScreen> {
     fetchOrder();
   }
 
-void fetchOrder() async {
-  
-    final response = await http.get(Uri.parse('http://localhost/ty_project/admin_panel/apiorder.php'));
+  void fetchOrder() async {
+    final response = await http
+        .get(Uri.parse('http://localhost/ty_project/admin_panel/apiorder.php'));
     if (response.statusCode == 200) {
       List<dynamic> jsonList = jsonDecode(response.body);
+      print(jsonList);
       List<OrderItem> fetchedorders =
           jsonList.map((e) => OrderItem.fromJson(e)).toList();
       setState(() {
@@ -37,9 +37,7 @@ void fetchOrder() async {
     } else {
       throw Exception('Failed to load categories');
     }
-  
-}
-
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,14 +72,15 @@ void fetchOrder() async {
               Column(
                 children: getChildrenWithSeperator(
                   addToLastChild: false,
-                  widgets: OrderItem.map((e) {
+                  widgets: order.asMap().entries.map<Widget>((e) {
+                    OrderItem orderItem = e.value;
                     return Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 25,
                       ),
                       width: double.maxFinite,
                       child: OrderItemWidget(
-                        item: e,
+                        item: orderItem,
                       ),
                     );
                   }).toList(),
@@ -98,7 +97,7 @@ void fetchOrder() async {
               Divider(
                 thickness: 1,
               ),
-              // getCheckoutButton(context)
+              //getCheckoutButton(context)
             ],
           ),
         ),

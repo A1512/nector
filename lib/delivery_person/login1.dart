@@ -27,7 +27,7 @@ class _LoginScreen1State extends State<LoginScreen1> {
     if (phone.text != null && password.text != null) {
       try {
         final response = await http.post(
-            Uri.parse('http://localhost/ty_project/admin_panel/apilogin.php'),
+            Uri.parse('http://localhost/ty_project/admin_panel/delivery_person/apilogin1.php'),
             body: {"phone": phone.text, "password": password.text});
 
         print(response.body);

@@ -1,14 +1,14 @@
 import 'package:flutter/src/widgets/container.dart';
 
 class OrderItem {
-  final int order_id;
-  final double amount;
+  final String id;
+  final String amount;
   final String product_name;
   final String status;
   final String doi;
 
   OrderItem({
-    required this.order_id,
+    required this.id,
     required this.amount,
     required this.product_name,
     required this.status,
@@ -17,7 +17,7 @@ class OrderItem {
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
     return OrderItem(
-      order_id: json['order_id'],
+      id: json['order_id'],
       amount: json['amount'],
       product_name: json['product_name'],
       status: json['status'],
@@ -27,7 +27,7 @@ class OrderItem {
 
   Map<String, dynamic> toJson() {
     return {
-      'order_id': order_id,
+      'order_id': id,
       'amount': amount,
       'product_name': product_name,
       'status': status,
@@ -35,6 +35,5 @@ class OrderItem {
     };
   }
 
-  static map(Container Function(dynamic e) param0) {}
-
+//  static map(Container Function(dynamic e) param0) {}
 }

@@ -51,7 +51,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
           Container(
               child: TextButton(
                   onPressed: () => {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddressForm(),))
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddressPage(),))
                   },
                   child: checkoutRow("Delivery", trailingText: "Add Address"))),
           getDivider(),

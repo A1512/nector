@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
 import 'package:grocery_app/models/grocery_item.dart';
 import 'package:grocery_app/styles/colors.dart';
+import 'package:badges/badges.dart' as badges;
 
 //import '../../widgets/item_counter_widget.dart';
 import 'order_item.dart';
@@ -16,12 +17,26 @@ class OrderItemWidget extends StatefulWidget {
 
 class _OrderItemWidgetState extends State<OrderItemWidget> {
   final double height = 110;
+  var col;
+  String stateString = "";
 
   final Color borderColor = Color(0xffE2E2E2);
 
   final double borderRadius = 18;
 
   int amount = 1;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (int.parse(widget.item.status) == 0) {
+      col = Colors.orangeAccent;
+      stateString = "Pending";
+    } else {
+      col = Colors.greenAccent;
+      stateString = "Success";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +80,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                   height: 5,
                 ),
                 AppText(
-                    text: widget.item.order_id.toString(),
+                    text: ("Order id: " + widget.item.id),
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: AppColors.darkGrey),
@@ -90,6 +105,18 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                 //   color: AppColors.darkGrey,
                 //   size: 25,
                 // ),
+                // AppText(
+                //   text: widget.item.status,
+                //   fontSize: 16,
+                //   fontWeight: FontWeight.bold,
+                // ),
+
+                badges.Badge(
+                  badgeStyle: badges.BadgeStyle(
+                      shape: badges.BadgeShape.square, badgeColor: col),
+                  badgeContent: Text(stateString),
+                ),
+
                 Spacer(
                   flex: 5,
                 ),

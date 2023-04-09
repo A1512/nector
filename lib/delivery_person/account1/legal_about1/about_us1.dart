@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 //import '../../../screens/account/legal_about/app_properties.dart';
 import 'app_properties1.dart';
 
-class AboutPage extends StatefulWidget {
+class AboutPage1 extends StatefulWidget {
   @override
-  _AboutPageState createState() => _AboutPageState();
+  _AboutPage1State createState() => _AboutPage1State();
 }
 
-class _AboutPageState extends State<AboutPage> {
+class _AboutPage1State extends State<AboutPage1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +77,7 @@ class _AboutPageState extends State<AboutPage> {
                     height: 20,
                   ),
                   Text(
-                      "Thank you for choosing famiecare as your trusted online grocery provider. We look forward to serving you and your family with the highest quality food and service.",
+                      "Thank you for choosing famiecare.",
                       style: TextStyle(fontSize: 15.0)),
                   SizedBox(
                     height: 20,

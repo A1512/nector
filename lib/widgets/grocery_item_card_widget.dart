@@ -37,8 +37,9 @@ class GroceryItemCardWidget extends StatelessWidget {
           children: [
             Expanded(
               child: Center(
-                child: Hero(
-                  tag: "GroceryItem:" + item.name + "-" + (heroSuffix ?? ""),
+                child: Container(
+                  height: 120,
+                  width: 120,
                   child: imageWidget(),
                 ),
               ),
@@ -63,7 +64,7 @@ class GroceryItemCardWidget extends StatelessWidget {
             Row(
               children: [
                 AppText(
-                  text: "\$${item.price.toStringAsFixed(2)}",
+                  text: "\$${item.price.toString()}",
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -79,7 +80,10 @@ class GroceryItemCardWidget extends StatelessWidget {
 
   Widget imageWidget() {
     return Container(
-      child: Image.asset(item.imagePath),
+      child: Image.asset(
+        item.imagePath,
+        fit: BoxFit.contain,
+      ),
     );
   }
 

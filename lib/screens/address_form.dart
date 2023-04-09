@@ -1,155 +1,136 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class AddressForm extends StatefulWidget {
+class AddressPage extends StatefulWidget {
   @override
-  _AddressFormState createState() => _AddressFormState();
+  _AddressPageState createState() => _AddressPageState();
 }
 
-class _AddressFormState extends State<AddressForm> {
+class _AddressPageState extends State<AddressPage> {
+  var data;
+  final TextEditingController _feedbackController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _houseNoController = TextEditingController();
-  final TextEditingController _streetNoController = TextEditingController();
-  final TextEditingController _areaController = TextEditingController();
-  final TextEditingController _cityController = TextEditingController();
-  final TextEditingController _pincodeController = TextEditingController();
 
-  @override
-  void dispose() {
-    _houseNoController.dispose();
-    _streetNoController.dispose();
-    _areaController.dispose();
-    _pincodeController.dispose();
-    super.dispose();
+  Future loginMtd() async {
+    //     body: {'phone': phone.text, 'password': password.text});
+
+    if (_feedbackController.text != "") {
+      try {
+        final response = await http.post(
+            Uri.parse(
+                'http://localhost/ty_project/admin_panel/apiviewfeedback.php'),
+            body: {
+              "feedback": _feedbackController.text,
+            });
+        print(response);
+        print("dummy");
+        data = jsonDecode(response.body);
+
+        print("Response from server:" + data);
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+    if (data == "Success") {
+      Fluttertoast.showToast(
+          msg: "Submit Successfully",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.grey,
+          fontSize: 25);
+    } else {
+      Fluttertoast.showToast(
+          msg: "Not Successfully",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.grey,
+          fontSize: 25);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color(0xff53B175),
-        //elevation: 0.0,
-        title: Text('Address Form'),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(
+          'Feedback',
+          style: TextStyle(color: Colors.green),
+        ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Enter your address details:',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      body: Center(
+        child: Container(
+          padding: EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 3,
+                blurRadius: 5,
+                offset: Offset(0, 3),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Please provide your feedback below:',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
                 ),
-                SizedBox(height: 16),
-                TextFormField(
-                  controller: _houseNoController,
-                  decoration: InputDecoration(
-                    labelText: 'House No/Flate No',
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green),
-                    ),
-                  ),
+              ),
+              SizedBox(height: 20.0),
+              Form(
+                key: _formKey,
+                child: TextFormField(
+                  controller: _feedbackController,
+                  maxLines: 8,
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your house no/flate no';
+                    if (value!.isEmpty) {
+                      return 'Please provide your feedback';
                     }
                     return null;
                   },
-                ),
-                SizedBox(height: 16),
-                TextFormField(
-                  controller: _streetNoController,
                   decoration: InputDecoration(
-                    labelText: 'Street',
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
                     ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your street no.';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 16),
-                TextFormField(
-                  controller: _areaController,
-                  decoration: InputDecoration(
-                    labelText: 'Area',
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your area.';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 16),
-                TextFormField(
-                  controller: _cityController,
-                  decoration: InputDecoration(
-                    labelText: 'City',
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your city';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 16),
-                TextFormField(
-                  controller: _pincodeController,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Pincode',
-                    border: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.green),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your pincode.';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(height: 16),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: Text('Submit'),
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      primary: Colors.green,
-                      onPrimary: Colors.white,
-                      textStyle: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    hintText: 'Type your feedback here...',
                   ),
                 ),
-              ],
-            ),
+              ),
+              SizedBox(height: 20.0),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    // Submit feedback logic goes here
+                    // Do something with the feedback
+                    loginMtd();
+                    Navigator.pop(context);
+                  }
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green),
+                ),
+                child: Text('Submit'),
+              ),
+            ],
           ),
         ),
       ),

@@ -66,9 +66,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           toastLength: Toast.LENGTH_LONG,
           backgroundColor: Colors.grey,
           fontSize: 25);
+          Navigator.of(context).pop();
       Navigator.push(
         context,
         MaterialPageRoute(
+          
           builder: (context) => ChangePasswordPage(),
         ),
       );

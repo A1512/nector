@@ -38,7 +38,7 @@ class _SignupScreen1State extends State<SignupScreen1> {
         email.text != null) {
       try {
         final response = await http.post(
-            Uri.parse('http://localhost/ty_project/admin_panel/apisignup.php'),
+            Uri.parse('http://localhost/ty_project/admin_panel/delivery_person/apisignup1.php'),
             body: {
               "firstname": firstname.text,
               "lastname": lastname.text,

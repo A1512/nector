@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
 import 'package:grocery_app/models/subcategory_item.dart';
-import 'package:grocery_app/screens/subcategory_items_screen.dart';
-
+import 'package:grocery_app/screens/product_screen.dart';
 
 import '../models/subcategory_item.dart';
 import 'package:grocery_app/widgets/category_item_card_widget.dart';
@@ -29,16 +28,14 @@ List<Color> gridColors = [
 class SubExploreScreen extends StatefulWidget {
   final int id;
 
-  SubExploreScreen({required this.id,required Map<String, int> map});
+  SubExploreScreen({required this.id, required Map<String, int> map});
   //SubExploreScreen(Map<String, int> map);
 
-  
   @override
   State<SubExploreScreen> createState() => _ExploreScreenState();
 }
 
 class _ExploreScreenState extends State<SubExploreScreen> {
-  
   late List<SubCategoryItem> subcategories = [];
 
   @override
@@ -46,23 +43,30 @@ class _ExploreScreenState extends State<SubExploreScreen> {
     super.initState();
     fetchSubCategories();
   }
-  
+
   Future<void> fetchSubCategories() async {
-    final response = await http.post  (Uri.parse('http://localhost/ty_project/admin_panel/apiviewsubcategory.php'),
-      body: {
-        "cat_id": "1",
+    try {
+      final response = await http.post(
+          Uri.parse(
+              'http://localhost/ty_project/admin_panel/apiviewsubcategory.php'),
+          body: {
+            "cat_id": widget.id.toString(),
+          });
+      if (response.statusCode == 200) {
+        List<dynamic> jsonList = jsonDecode(response.body);
+        print(jsonList);
+        List<SubCategoryItem> fetchedSubCategories =
+            jsonList.map((e) => SubCategoryItem.fromJson(e)).toList();
+        setState(() {
+          subcategories = fetchedSubCategories;
+        });
+      } else {
+        throw Exception('Failed to load categories');
       }
-    );
-    if (response.statusCode == 200) {
-      List<dynamic> jsonList = jsonDecode(response.body);
-      List<SubCategoryItem> fetchedSubCategories = jsonList.map((e) => SubCategoryItem.fromJson(e)).toList();
-      setState(() {
-        subcategories = fetchedSubCategories;
-      });
-    } else {
-      throw Exception('Failed to load categories');
+    } catch (Exception) {
+      print(Exception);
     }
-  }  
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +119,16 @@ class _ExploreScreenState extends State<SubExploreScreen> {
           SubCategoryItem SubcategoryItem = e.value;
           return GestureDetector(
             onTap: () {
-              onSubCategoryItemClicked(context, SubcategoryItem);
+              //onSubCategoryItemClicked(context, SubcategoryItem);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SubCategoryItemsScreen(
+                    map: {'map': 1},
+                    id: int.parse(SubcategoryItem.id),
+                  ),
+                ),
+              );
             },
             child: Container(
               padding: EdgeInsets.all(10),
@@ -132,11 +145,13 @@ class _ExploreScreenState extends State<SubExploreScreen> {
     );
   }
 
-  void onSubCategoryItemClicked(BuildContext context, SubCategoryItem SubcategoryItem) {
-    Navigator.of(context).push(new MaterialPageRoute(
-      builder: (BuildContext context) {
-        return SubCategoryItemsScreen();
-      },
-    ));
-  }
+  // void onSubCategoryItemClicked(
+  //     BuildContext context, SubCategoryItem SubcategoryItem) {
+  //   Navigator.of(context).push(new MaterialPageRoute(
+  //     builder: (BuildContext context) {
+  //       return produ
+  //     },
+  //   )
+  //   );
+  // }
 }

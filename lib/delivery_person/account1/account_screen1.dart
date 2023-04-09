@@ -7,9 +7,10 @@ import 'package:grocery_app/screens/account/legal_about/faq_page.dart';
 import 'package:grocery_app/screens/login.dart';
 import 'package:grocery_app/styles/colors.dart';
 
+import '../login1.dart';
 import 'account_item1.dart';
 
-class AccountScreen extends StatelessWidget {
+class AccountScreen1 extends StatelessWidget {
   //BuildContext get scaffoldContext => null;
 
   @override
@@ -27,7 +28,7 @@ class AccountScreen extends StatelessWidget {
                 leading:
                     SizedBox(width: 65, height: 75, child: getImageHeader()),
                 title: AppText(
-                  text: "USER",
+                  text: "Delivery Person",
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -106,7 +107,7 @@ class AccountScreen extends StatelessWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => LoginScreen(),
+                  builder: (context) => LoginScreen1(),
                 ));
           },
         ),

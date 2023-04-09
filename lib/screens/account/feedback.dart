@@ -16,7 +16,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Future loginMtd() async {
     //     body: {'phone': phone.text, 'password': password.text});
 
-    if (_feedbackController.text != null) {
+    if (_feedbackController.text != "") {
       try {
         final response = await http.post(
             Uri.parse(
@@ -24,10 +24,11 @@ class _FeedbackPageState extends State<FeedbackPage> {
             body: {
               "feedback": _feedbackController.text,
             });
-       
+        print(response);
+        print("dummy");
         data = jsonDecode(response.body);
 
-        print("Response from server: $data");
+        print("Response from server:" + data);
       } catch (e) {
         print(e.toString());
       }
@@ -118,7 +119,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // Submit feedback logic goes here
-                    String feedback = _feedbackController.text;
                     // Do something with the feedback
                     loginMtd();
                     Navigator.pop(context);

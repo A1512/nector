@@ -3,12 +3,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class ComplaintPage extends StatefulWidget {
+class ComplaintPage1 extends StatefulWidget {
   @override
-  _ComplaintPageState createState() => _ComplaintPageState();
+  _ComplaintPage1State createState() => _ComplaintPage1State();
 }
 
-class _ComplaintPageState extends State<ComplaintPage> {
+class _ComplaintPage1State extends State<ComplaintPage1> {
   final TextEditingController _complaintController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   var data;
@@ -19,7 +19,7 @@ class _ComplaintPageState extends State<ComplaintPage> {
       try {
         final response = await http.post(
             Uri.parse(
-                'http://localhost/ty_project/admin_panel/apiviewcomplaint.php'),
+                'http://localhost/ty_project/admin_panel/delivery_person/apiviewcomplaint1.php'),
             body: {
               "complaint": _complaintController.text,
             });
