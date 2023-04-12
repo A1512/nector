@@ -78,7 +78,7 @@ class WelcomeScreen extends StatelessWidget {
 
   Widget sloganText() {
     return AppText(
-      text: "Get your grecories as fast as in hour",
+      text: "Get your grecories as fast as possible",
       fontSize: 16,
       fontWeight: FontWeight.w600,
       color: Color(0xffFCFCFC).withOpacity(0.7),

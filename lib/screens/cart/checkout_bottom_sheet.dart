@@ -1,8 +1,12 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/common_widgets/app_button.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
+import 'package:grocery_app/screens/account/legal_about/terms.dart';
+import 'package:grocery_app/screens/address_form.dart';
 
 import '../order_failed_dialog.dart';
+import 'checkout_terms.dart';
 
 class CheckoutBottomSheet extends StatefulWidget {
   @override
@@ -44,16 +48,21 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
             height: 45,
           ),
           getDivider(),
-          checkoutRow("Delivery", trailingText: "Select Method"),
+          Container(
+              child: TextButton(
+                  onPressed: () => {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddressPage(),))
+                  },
+                  child: checkoutRow("Delivery", trailingText: "Add Address"))),
           getDivider(),
-          checkoutRow(
-            "Payment",
-            trailingWidget: Icon(
-              Icons.payment,
-            ),
-          ),
+          // checkoutRow(
+          //   "Payment",
+          //   trailingWidget: Icon(
+          //     Icons.payment,
+          //   ),
+          // ),
           getDivider(),
-          checkoutRow("Promo Code", trailingText: "Pick Discount"),
+          // checkoutRow("Promo Code", trailingText: "Pick Discount"),
           getDivider(),
           checkoutRow("Total Cost", trailingText: "\$13.97"),
           getDivider(),
@@ -91,28 +100,50 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
   Widget termsAndConditionsAgreement(BuildContext context) {
     return RichText(
       text: TextSpan(
-          text: 'By placing an order you agree to our',
-          style: TextStyle(
-            color: Color(0xFF7C7C7C),
-            fontSize: 14,
-            fontFamily: Theme.of(context).textTheme.bodyText1?.fontFamily,
-            fontWeight: FontWeight.w600,
+        text: 'By placing an order you agree to our',
+        style: TextStyle(
+          color: Color(0xFF7C7C7C),
+          fontSize: 14,
+          fontFamily: Theme.of(context).textTheme.bodyText1?.fontFamily,
+          fontWeight: FontWeight.w600,
+        ),
+        children: [
+          TextSpan(
+            text: " Terms and Conditions",
+            style: TextStyle(
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+              decoration: TextDecoration.underline,
+            ),
+            recognizer: TapGestureRecognizer()
+              ..onTap = () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => checkTermsPage(),
+                    ));
+                // Do something here, such as show the terms and conditions screen
+              },
           ),
-          children: [
-            TextSpan(
-              text: " Terms",
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-            ),
-            TextSpan(text: " And"),
-            TextSpan(
-              text: " Conditions",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ]),
+          // TextSpan(text: " And"),
+          // TextSpan(
+          //   text: " Conditions",
+          //   style: TextStyle(
+          //     color: Colors.blue,
+          //     fontWeight: FontWeight.bold,
+          //     decoration: TextDecoration.underline,
+          //   ),
+          //   recognizer: TapGestureRecognizer()
+          //     ..onTap = () {
+          //       Navigator.push(
+          //           context,
+          //           MaterialPageRoute(
+          //             builder: (context) => checkTermsPage(),
+          //           ));
+          //     },
+          // ),
+        ],
+      ),
     );
   }
 

@@ -50,14 +50,36 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/otp_background.png"),
-            fit: BoxFit.cover,
-            opacity: 0.2
+      body: Stack(
+        children: [
+           Positioned.fill(
+            child: Opacity(
+              opacity: 0.2,
+              child: Image.asset(
+                'assets/images/otp_background.png',
+                fit: BoxFit.cover,
+                //color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.2),
+                
+               
+              ),
+            ),
           ),
-        ),
+          AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0.0,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back,color: Colors.black,),
+              onPressed: () => Navigator.of(context).pop(),
+         ),
+       ),
+          Container(
+        //    decoration: BoxDecoration(
+        //   image: DecorationImage(
+        //     image: AssetImage("assets/images/otp_background.png"),
+        //     fit: BoxFit.cover,
+        //     opacity: 0.2
+        //   ),
+        // ),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -109,6 +131,8 @@ class _OtpScreenState extends State<OtpScreen> {
           ),
         ),
       ),
+        ],
+      )
     );
   }
 

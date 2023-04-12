@@ -1,15 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:grocery_app/models/grocery_item.dart';
 import 'package:grocery_app/screens/product_details/product_details_screen.dart';
+import 'package:grocery_app/screens/product_screen.dart';
 import 'package:grocery_app/styles/colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocery_app/widgets/grocery_item_card_widget.dart';
 import 'package:grocery_app/widgets/search_bar_widget.dart';
-
+import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 import 'grocery_featured_Item_widget.dart';
 import 'home_banner_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late List<GroceryItem> product = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchproduct();
+  }
+
+  Future<void> fetchproduct() async {
+    try {
+      final response = await http.post(
+          Uri.parse(
+              'http://localhost/ty_project/admin_panel/apiviewproduct.php'),
+          body: {
+            "sub_cat_id": "1",
+          });
+      if (response.statusCode == 200) {
+        List<dynamic> jsonList = jsonDecode(response.body);
+        print(jsonList);
+        List<GroceryItem> fetchedProducts =
+            jsonList.map((e) => GroceryItem.fromJson(e)).toList();
+        setState(() {
+          product = fetchedProducts;
+        });
+      } else {
+        throw Exception('Failed to load categories');
+      }
+    } catch (Exception) {
+      print(Exception);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,40 +146,57 @@ class HomeScreen extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       height: 250,
-      child: ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        itemCount: items.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              onItemClicked(context, items[index]);
-            },
-            child: GroceryItemCardWidget(
-              item: items[index],
-              heroSuffix: "home_screen",
+      child: ListView(
+        children: [
+          SingleChildScrollView(
+            // scrollDirection: Axis.horizontal,
+            child: StaggeredGrid.count(
+              crossAxisCount: 2,
+              // I only need two card horizontally
+              children: product.asMap().entries.map<Widget>((e) {
+                int index = e.key;
+                GroceryItem groceryItem = e.value;
+                return GestureDetector(
+                  onTap: () {
+                    onItemClicked(context, groceryItem);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SubCategoryItemsScreen(
+                          map: {'map': 1},
+                          id: int.parse(groceryItem.id),
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: GroceryItemCardWidget(
+                      item: groceryItem,
+                      heroSuffix: "explore_screen",
+                    ),
+                  ),
+                );
+              }).toList(),
+              mainAxisSpacing: 3.0,
+              crossAxisSpacing: 0.0, // add some space
             ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(
-            width: 20,
-          );
-        },
+          )
+        ],
       ),
     );
   }
 
-  void onItemClicked(BuildContext context, GroceryItem groceryItem) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => ProductDetailsScreen(
-                groceryItem,
-                heroSuffix: "home_screen",
-              )),
-    );
-  }
+  // void onItemClicked(BuildContext context, GroceryItem groceryItem) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //         builder: (context) => ProductDetailsScreen(
+  //               groceryItem,
+  //               heroSuffix: "home_screen",
+  //             )),
+  //   );
+  // }
 
   Widget subTitle(String text) {
     return Row(
@@ -171,10 +229,22 @@ class HomeScreen extends StatelessWidget {
           width: 8,
         ),
         Text(
-          "Khartoum,Sudan",
+          "Shahibag,Ahmedabad",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         )
       ],
+    );
+  }
+
+  void onItemClicked(BuildContext context, GroceryItem groceryItem) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProductDetailsScreen(
+          groceryItem,
+          heroSuffix: "explore_screen",
+        ),
+      ),
     );
   }
 }

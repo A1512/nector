@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
 import 'package:grocery_app/models/category_item.dart';
+import 'package:grocery_app/screens/subcategory_explore.dart';
 import 'package:grocery_app/widgets/category_item_card_widget.dart';
 import 'package:grocery_app/widgets/search_bar_widget.dart';
 import 'dart:convert';
@@ -35,23 +36,18 @@ class _ExploreScreenState extends State<ExploreScreen> {
     fetchCategories();
   }
 
-  Future<void> fetchCategories() async {
-    try {
-      final response = await http.get(Uri.parse(
-          'http://localhost/ty_project/latest_famiecare_project_adminpanel/apicategories.php'));
-      if (response.statusCode == 200) {
-        List<dynamic> jsonList = jsonDecode(response.body);
-        List<CategoryItem> fetchedCategories =
-            jsonList.map((e) => CategoryItem.fromJson(e)).toList();
-        setState(() {
-          categories = fetchedCategories;
-        });
-      } else {
-        throw Exception('Failed to load categories');
-      }
-    } catch (e) {
-      print(e.toString());
-      Fluttertoast.showToast(msg: "Failed to load categories");
+  void fetchCategories() async {
+    final response = await http.get(
+        Uri.parse('http://localhost/ty_project/admin_panel/apicategories.php'));
+    if (response.statusCode == 200) {
+      List<dynamic> jsonList = jsonDecode(response.body);
+      List<CategoryItem> fetchedCategories =
+          jsonList.map((e) => CategoryItem.fromJson(e)).toList();
+      setState(() {
+        categories = fetchedCategories;
+      });
+    } else {
+      throw Exception('Failed to load categories');
     }
   }
 
@@ -106,7 +102,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
           CategoryItem categoryItem = e.value;
           return GestureDetector(
             onTap: () {
-              onCategoryItemClicked(context, categoryItem);
+             // onCategoryItemClicked(context, categoryItem);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SubExploreScreen(
+                    map: {'map': 1},
+                    id: int.parse(categoryItem.id),
+                  ),
+                ),
+              );
             },
             child: Container(
               padding: EdgeInsets.all(10),
@@ -123,11 +128,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
     );
   }
 
-  void onCategoryItemClicked(BuildContext context, CategoryItem categoryItem) {
-    Navigator.of(context).push(new MaterialPageRoute(
-      builder: (BuildContext context) {
-        return CategoryItemsScreen();
-      },
-    ));
-  }
+  // void onCategoryItemClicked(BuildContext context, CategoryItem categoryItem) {
+  //   Navigator.of(context).push(new MaterialPageRoute(
+  //     builder: (BuildContext context) {
+  //       return CategoryItemsScreen();
+  //     },
+  //   ));
+  // }
 }

@@ -32,13 +32,16 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: Center(
-        child: splashScreenIcon(),
+        child: splashScreenIcon(context),
       ),
     );
   }
-}
 
-Widget splashScreenIcon() {
-  String iconPath = "assets/icons/splash_screen_icon.png";
-  return Image.asset(iconPath);
+  Widget splashScreenIcon(BuildContext context) {
+    String iconPath = "assets/images/femiecare_logo.png";
+    return Image.asset(
+      iconPath,
+      width: MediaQuery.of(context).size.width - 50,
+    );
+  }
 }

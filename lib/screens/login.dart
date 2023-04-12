@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_app/delivery_person/welcome_screen1.dart';
 import 'package:grocery_app/screens/dashboard/dashboard_screen.dart';
 import 'package:grocery_app/screens/otp.dart';
 import 'package:grocery_app/screens/signup.dart';
 import 'dart:ui';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -10,9 +14,50 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  var data;
   final _formKey = GlobalKey<FormState>();
-  late String _mobileNumber;
-  late String _password;
+  // late String _mobileNumber;
+  // late String _password;
+  TextEditingController phone = TextEditingController(text: '');
+
+  TextEditingController password = TextEditingController(text: '');
+  Future loginMtd() async {
+    if (phone.text != null && password.text != null) {
+      try {
+        final response = await http.post(
+            Uri.parse('http://localhost/ty_project/admin_panel/apilogin.php'),
+            body: {"phone": phone.text, "password": password.text});
+
+        print(response.body);
+        if (response.statusCode == 200 && response.body.isNotEmpty) {
+          data = jsonDecode(response.body);
+          // process the response data
+        } else {
+          // handle the error
+
+          print('Error: response body is empty');
+        }
+
+        print("Response from server: $data");
+      } catch (e) {
+        print(e.toString());
+      }
+    }
+
+    if (data == "success") {
+      Fluttertoast.showToast(
+          msg: "Login Successfully",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.grey,
+          fontSize: 25);
+    } else {
+      Fluttertoast.showToast(
+          msg: "Login Not Successfully",
+          toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Colors.grey,
+          fontSize: 25);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +74,25 @@ class _LoginScreenState extends State<LoginScreen> {
                 fit: BoxFit.cover,
               ),
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8.0, 20.0, 8.0, 8.0),
+            child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WelcomeScreen1(),
+                      ));
+                },
+                child: Text(
+                  'Not a User?',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                  ),
+                )),
           ),
           SafeArea(
             child: Padding(
@@ -48,6 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     SizedBox(height: 16.0),
                     TextFormField(
+                      controller: phone,
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         hintText: 'Mobile Number',
@@ -61,12 +126,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                       onSaved: (value) {
-                        _mobileNumber = value!;
+                        phone = value! as TextEditingController;
                       },
                     ),
                     SizedBox(height: 16),
                     TextFormField(
-                      obscureText: true,
+                      controller: password,
+                      // obscureText: true,
                       decoration: InputDecoration(
                         hintText: 'Password',
                         fillColor: Colors.white,
@@ -79,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                       onSaved: (value) {
-                        _password = value!;
+                        password = value! as TextEditingController;
                       },
                     ),
                     SizedBox(height: 16),
@@ -100,6 +166,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(fontSize: 20),
                       ),
                       onPressed: () {
+                        // print(phone.text);
+                        //print(password.text);
+                        loginMtd();
                         // if (_formKey.currentState!.validate()) {
                         //   _formKey.currentState!.save();
                         //   // TODO: Implement login functionality
@@ -123,11 +192,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 builder: (context) => OtpScreen(),
                               ));
                         },
-                        child: Text('forgot password?',style: TextStyle(
-                          color: Colors.white,
-                          fontStyle: FontStyle.italic,
-                          
-                        ),))
+                        child: Text(
+                          'forgot password?',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ))
                   ],
                 ),
               ),

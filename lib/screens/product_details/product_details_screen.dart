@@ -44,7 +44,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         fontWeight: FontWeight.w600,
                         color: Color(0xff7C7C7C),
                       ),
-                      trailing: FavoriteToggleIcon(),
+                      //trailing: FavoriteToggleIcon(),
                     ),
                     Spacer(),
                     Row(
@@ -70,9 +70,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     Divider(thickness: 1),
                     getProductDataRowWidget("Product Details"),
                     Divider(thickness: 1),
-                    getProductDataRowWidget("Nutritions",
-                        customWidget: nutritionWidget()),
-                    Divider(thickness: 1),
+                    // getProductDataRowWidget("Nutritions",
+                    //     customWidget: nutritionWidget()),
+                    //Divider(thickness: 1),
                     getProductDataRowWidget(
                       "Review",
                       customWidget: ratingWidget(),
@@ -186,7 +186,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  double getTotalPrice() {
-    return amount * widget.groceryItem.price;
+  int getTotalPrice() {
+     var a = int.parse(widget.groceryItem.price);
+    return amount *a;
   }
 }
